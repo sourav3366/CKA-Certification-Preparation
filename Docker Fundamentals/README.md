@@ -1,5 +1,9 @@
 # Day 1: Docker Fundamentals for Kubernetes | CKA Certification Course 2025
 
+## Video reference for Day 1 is the following:
+
+[![Watch the video](https://img.youtube.com/vi/r3QWVLeA5qM/maxresdefault.jpg)](https://youtu.be/r3QWVLeA5qM)
+
 ---
 ## ⭐ Support the Project  
 If this **repository** helps you, give it a ⭐ to show your support and help others discover it! 
@@ -9,33 +13,7 @@ If this **repository** helps you, give it a ⭐ to show your support and help ot
 
 ## **How Were Development and Deployment Done Before Docker? Why Do We Need Docker? What Challenges Does It Solve?**
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    TRADITIONAL SOFTWARE DEPLOYMENT                          │
-└─────────────────────────────────────────────────────────────────────────────┘
-
-     ┌──────────────────┐      ┌──────────────────┐      ┌──────────────────┐
-     │   DEVELOPMENT    │      │      TEST        │      │   PRODUCTION     │
-     │   ENVIRONMENT    │      │   ENVIRONMENT    │      │   ENVIRONMENT    │
-     ├──────────────────┤      ├──────────────────┤      ├──────────────────┤
-     │ Python 3.4       │      │ Python 3.2       │      │ Python 3.1       │
-     │ MySQL 5.7        │      │ MySQL 5.6        │      │ MySQL 5.5        │
-     │ Ubuntu 20.04     │      │ CentOS 7         │      │ RHEL 6           │
-     │ 8GB RAM          │      │ 4GB RAM          │      │ 16GB RAM         │
-     │                  │      │                  │      │                  │
-     │ App Files        │─────▶│ App Files        │─────▶│ App Files        │
-     │ (tar.gz/zip)     │      │ (tar.gz/zip)     │      │ (tar.gz/zip)     │
-     └──────────────────┘      └──────────────────┘      └──────────────────┘
-            │                        │                          │
-            │                        │                          │
-            └────────────────────────┴──────────────────────────┘
-                         ❌ DEPLOYMENT ISSUES
-              • Different OS configurations
-              • Dependency conflicts
-              • Version mismatches
-              • Resource contention
-              • Manual deployment errors
-```
+![Alt text](../assets/1a.png)
 
 Before Docker, the software lifecycle involved several manual and error-prone processes:
 
@@ -77,38 +55,9 @@ Before Docker, the software lifecycle involved several manual and error-prone pr
 
 ## **What Is Docker?**
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                     DOCKER CONTAINER-BASED DEPLOYMENT                        │
-└─────────────────────────────────────────────────────────────────────────────┘
+![Alt text](../assets/1b.png)
 
-     ┌──────────────────┐      ┌──────────────────┐      ┌──────────────────┐
-     │   DEVELOPMENT    │      │      TEST        │      │   PRODUCTION     │
-     │   ENVIRONMENT    │      │   ENVIRONMENT    │      │   ENVIRONMENT    │
-     ├──────────────────┤      ├──────────────────┤      ├──────────────────┤
-     │                  │      │                  │      │                  │
-     │  ┌────────────┐  │      │  ┌────────────┐  │      │  ┌────────────┐  │
-     │  │  CONTAINER │  │      │  │  CONTAINER │  │      │  │  CONTAINER │  │
-     │  ├────────────┤  │      │  ├────────────┤  │      │  ├────────────┤  │
-     │  │ App Files  │  │      │  │ App Files  │  │      │  │ App Files  │  │
-     │  │ Python 3.8 │  │      │  │ Python 3.8 │  │      │  │ Python 3.8 │  │
-     │  │ MySQL 5.7  │  │      │  │ MySQL 5.7  │  │      │  │ MySQL 5.7  │  │
-     │  │ All Deps   │  │      │  │ All Deps   │  │      │  │ All Deps   │  │
-     │  └────────────┘  │      │  └────────────┘  │      │  └────────────┘  │
-     │                  │      │                  │      │                  │
-     └──────────────────┘      └──────────────────┘      └──────────────────┘
-            │                        │                          │
-            │                        │                          │
-            └────────────────────────┴──────────────────────────┘
-                         ✅ SAME IMAGE = SAME BEHAVIOR
-              • Consistent environments
-              • No dependency conflicts
-              • Portable across platforms
-              • Faster deployments
-              • Automated processes
-```
-
-Docker revolutionizes development and deployment by introducing **containers**. Let's compare:
+Docker revolutionizes development and deployment by introducing **containers**. Let’s compare:
 
 ### **Before Docker**
 - Applications were **manually loaded** into environments alongside their dependencies, leaving them vulnerable to configuration mismatches between development, testing, and production environments.  
@@ -146,44 +95,7 @@ Now, let’s break down this analogy further:
 
 ## **Virtual Machines (VMs) vs Docker Architecture**
 
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                     VIRTUAL MACHINES vs DOCKER ARCHITECTURE                      │
-└─────────────────────────────────────────────────────────────────────────────────┘
-
-VIRTUAL MACHINES (VMs)                       DOCKER CONTAINERS
-┌───────────────────────────────────┐       ┌───────────────────────────────────┐
-│           Hypervisor              │       │        Docker Engine              │
-│     (VirtualBox, VMware, etc)     │       │      (Container Runtime)          │
-├───────────────────────────────────┤       ├───────────────────────────────────┤
-│  ┌──────────┐  ┌──────────┐       │       │                                   │
-│  │ Guest OS │  │ Guest OS │       │       │  ┌──────────┐  ┌──────────┐      │
-│  │ (Ubuntu) │  │ (Windows)│       │       │  │Container1│  │Container2│      │
-│  ├──────────┤  ├──────────┤       │       │  ├──────────┤  ├──────────┤      │
-│  │   App    │  │   App    │       │       │  │   App    │  │   App    │      │
-│  │   Bins   │  │   Bins   │       │       │  │   Bins   │  │   Bins   │      │
-│  └──────────┘  └──────────┘       │       │  └──────────┘  └──────────┘      │
-└───────────────────────────────────┘       │                                   │
-           │                                 │                                   │
-           ▼                                 │                                   │
-┌───────────────────────────────────┐       └───────────────────────────────────┘
-│         Host Operating System     │                   │
-└───────────────────────────────────┘                   ▼
-                                      ┌───────────────────────────────────┐
-                                      │         Host Operating System     │
-                                      └───────────────────────────────────┘
-           │                                   │
-           ▼                                   ▼
-┌───────────────────────────────────┐  ┌───────────────────────────────────┐
-│          Physical Server          │  │        Physical Server             │
-└───────────────────────────────────┘  └───────────────────────────────────┘
-
-Characteristics:                              Characteristics:
-• Full OS isolation                          • Shared OS kernel
-• Heavyweight (GBs)                          • Lightweight (MBs)
-• Slow startup (minutes)                     • Fast startup (seconds)
-• High resource overhead                     • Low resource overhead
-```
+![Alt text](../assets/1c.png)
 
 | Feature                  | Virtual Machines (VMs)                        | Docker Containers                              |
 |--------------------------|-----------------------------------------------|-----------------------------------------------|
@@ -200,50 +112,7 @@ Characteristics:                              Characteristics:
 
 ## **High-Level Workflow with Docker**
 
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                     HIGH-LEVEL DOCKER WORKFLOW                                   │
-└─────────────────────────────────────────────────────────────────────────────────┘
-
-  DEVELOPER                    DOCKER REGISTRY               PRODUCTION SERVER
-                                 (DockerHub, ECR)
-                                          
-    ┌──────────┐                    ┌───────────────┐           ┌───────────────┐
-    │   Git    │                    │               │           │               │
-    │  Repo    │                    │  Docker Image │           │   Container   │
-    │          │                    │   Repository  │           │    Runtime    │
-    │  Docker  │                    │               │           │               │
-    │  File    │                    │  ┌─────────┐  │           │  ┌─────────┐  │
-    └────┬─────┘                    │  │  Image  │  │           │  │  App    │  │
-         │                          │  │  myapp  │  │           │  │ Running │  │
-         │ 1. Build                 │  │ v1.0.0  │  │           │  └─────────┘  │
-         │ $ docker build           │  └─────────┘  │           └───────┬───────┘
-         ▼                          │               │                   │
-    ┌──────────┐                    │               │                   │
-    │  Docker  │                    │               │                   │
-    │  Image   │                    │               │                   │
-    │  (Local) │                    │               │                   │
-    └────┬─────┘                    │               │                   │
-         │                          │               │                   │
-         │ 2. Push                  │               │                   │
-         │ $ docker push            │               │                   │
-         └─────────────────────────▶│               │                   │
-                                    │               │                   │
-                                    │ 3. Pull       │                   │
-                                    │ $ docker pull │                   │
-                                    │◀──────────────┴───────────────────┘
-                                    │               │
-                                    └───────────────┘
-                                    
-                                   4. Run Container
-                                   $ docker run
-                                   
-Key Steps:
-1️⃣ Developer writes Dockerfile (stored in Git)
-2️⃣ Build image: $ docker build → Creates local Docker image
-3️⃣ Push to registry: $ docker push → Uploads to repository
-4️⃣ Pull & run: $ docker pull → $ docker run → Deploys to environments
-```
+![Alt text](../assets/1d.png)
 
 ---
 
@@ -275,53 +144,9 @@ Key Steps:
 - **REST API:** Like the **wires**, transmitting instructions from the dashboard to the engine.  
 - **Docker Daemon:** Like the **engine**, performing tasks such as pulling images and running containers.
 
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                  DOCKER WORKFLOW ACROSS ENVIRONMENTS                             │
-└─────────────────────────────────────────────────────────────────────────────────┘
+![Alt text](../assets/1e.png)
 
-DEVELOPER WORKSTATION                      REGISTRY                         ENVIRONMENTS
-                                    (DockerHub, ECR, etc)
-                                    
-    ┌──────────────────┐               ┌─────────────┐         ┌──────────────────────┐
-    │   Git Repo       │               │             │         │                      │
-    │   (Dockerfile)   │               │  Docker     │         │   TEST ENVIRONMENT   │
-    └────────┬─────────┘               │  Registry   │         │                      │
-             │                         │             │         │  ┌────────────────┐  │
-             │                         │  ┌───────┐  │         │  │   Container    │  │
-             │ 1. Build                │  │ Image │  │         │  │   (Purple VM)  │  │
-             │ $ docker build          │  │ v1.0  │  │         │  │                │  │
-             ▼                         │  └───────┘  │         │  │  App Running   │  │
-    ┌──────────────────┐               │             │         │  └────────────────┘  │
-    │  Local Image     │               │             │         └──────────────────────┘
-    │  (Built Locally) │               │             │                   ▲
-    └────────┬─────────┘               │             │                   │
-             │                         │             │                   │
-             │ 2. Push                 │             │                   │
-             │ $ docker push           │             │                   │
-             └────────────────────────▶│             │                   │
-                                       │             │                   │
-                                       │ 3. Pull     │                   │
-                                       │ $ docker pull                  │
-                                       │◀────────────┴───────────────────┘
-                                       │             │
-    ┌──────────────────┐               │             │         ┌──────────────────────┐
-    │  PROD ENVIRONMENT│               │             │         │                      │
-    │  ┌────────────┐  │               │             │         │   Container Deploy   │
-    │  │ Container  │  │               │             │         │                      │
-    │  │(Blue VM)   │  │               │             │         │  4. $ docker run     │
-    │  │            │  │               │             │         │                      │
-    │  │App Running │  │               │             │         │                      │
-    │  └────────────┘  │               │             │         │                      │
-    └──────────────────┘               │             │         └──────────────────────┘
-              ▲                        │             │
-              │                        │             │
-              │  4. Pull & Run         │             │
-              └────────────────────────┴─────────────┘
-
-This diagram visually represents the **Docker workflow**, illustrating how a developer 
-builds, pushes, and deploys a Docker image across different environments.
-```
+This image visually represents the **Docker workflow**, illustrating how a developer builds, pushes, and deploys a Docker image across different environments.
 
 ### **Key Steps in the Workflow:**
 1. **Developer writes a Dockerfile** (stored in version control like Git).
