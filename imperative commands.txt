@@ -50,4 +50,68 @@ kubectl get pods --selector app=nginx
 kubectl scale rc nginx-rc --replicas=4
 kubectl create rc nginx-rc --image=nginx --replicas=3
 
+kubectl rollout history deployment nginx-deployment
+kubectl set image deployment nginx-deployment nginx-container=nginx:1.20
 kubectl annotate deployments.apps nginx-deployment kubernetes.io/change-cause="Upgraded nginx 1.19 to 1.20"
+kubectl rollout history deployment nginx-deployment
+kubectl describe deployment nginx-deployment
+kubectl set image deployment nginx-deployment nginx-container=nginx:1.21
+kubectl annotate deployments.apps nginx-deployment kubernetes.io/change-cause="Upgraded nginx 1.20 to 1.21"
+kubectl rollout history deployment nginx-deployment
+kubectl rollout undo deployment nginx-deployment --to-revision=1
+
+
+-------------------
+kubectl create deployment backend-deploy \
+  --image=hashicorp/http-echo \
+  --replicas=3 \
+  --port=5678 \
+  --dry-run=client -o yaml > backend-deploy-test.yaml
+
+kubectl apply -f backend-deploy.yaml
+
+kubectl expose deployment backend-deploy \
+  --type=ClusterIP \
+  --port=9090 \
+  --target-port=5678 \
+  --name=backend-svc \
+  --dry-run=client -o yaml >> backend-deploy.yaml
+
+kubectl create deployment frontend-deploy \
+  --image=nginx \
+  --replicas=3 \
+  --port=80 \
+  --dry-run=client -o yaml > frontend-deploy.yaml
+
+kubectl apply -f frontend-deploy.yaml
+
+kubectl expose deployment frontend-deploy \
+  --type=NodePort \
+  --port=80 \
+  --target-port=80 \
+  --name=frontend-svc \
+  --dry-run=client -o yaml >> frontend-deploy.yaml
+
+
+kubectl get all
+kubectl describe svc backend-svc
+kubectl get pods -o wide
+
+
+kubectl run test-pod \
+  --rm -it \
+  --restart=Never \
+  --labels=app=test-pod \
+  --image=nginx \
+  -- /bin/sh
+
+
+inside run :
+curl backend-svc:9090
+
+
+kubectl get pods --show=labels
+kubectl get svc -n kube-system
+kubectl get pods -o wide -n kube-system
+
+kind create cluster --name my-second-cluster --config kind-cluster.yaml
