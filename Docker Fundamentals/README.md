@@ -1,6 +1,7 @@
 # Day 1: Docker Fundamentals for Kubernetes | CKA Certification Course 2025
 
 
+
 ## **How Were Development and Deployment Done Before Docker? Why Do We Need Docker? What Challenges Does It Solve?**
 
 ![Alt text](../assets/1a.png)
