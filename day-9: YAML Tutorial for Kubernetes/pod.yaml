@@ -1,7 +1,7 @@
 apiVersion: v1 # String scalar
 kind: Pod # String scalar
 metadata: # Dictionary
-  name: my-pod-2 # String scalar
+  name: my-pod-1 # String scalar
   labels: # Nested Dictionary
     app: nginx # String scalar
     environment: development # String scalar

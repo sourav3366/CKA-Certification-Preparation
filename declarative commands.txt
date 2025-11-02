@@ -1,0 +1,14 @@
+# Apply a resource configuration (like Pod, Deployment, Service) from a YAML file
+kubectl apply -f pod.yaml
+
+kubectl apply -f nginx-rc.yaml
+
+kubectl rollout history deployment nginx-deployment
+kubectl set image deployment nginx-deployment nginx-container=nginx:1.20
+kubectl annotate deployments.apps nginx-deployment kubernetes.io/change-cause="Upgraded nginx 1.19 to 1.20"
+kubectl rollout history deployment nginx-deployment
+kubectl describe deployment nginx-deployment
+kubectl set image deployment nginx-deployment nginx-container=nginx:1.21
+kubectl annotate deployments.apps nginx-deployment kubernetes.io/change-cause="Upgraded nginx 1.20 to 1.21"
+kubectl rollout history deployment nginx-deployment
+kubectl rollout undo deployment nginx-deployment --to-revision=1

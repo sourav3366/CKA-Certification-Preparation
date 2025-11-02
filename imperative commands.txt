@@ -1,0 +1,53 @@
+# Check Docker installation details and verify Docker is running
+docker info
+
+# Create a Kind cluster named 'my-first-cluster' using a configuration file
+kind create cluster --name my-first-cluster --config kind-cluster.yaml
+
+# List all Kind clusters available on your system
+kind get clusters
+
+# List all nodes in the current Kubernetes cluster with additional details (IP, roles, version)
+kubectl get nodes -o wide
+
+# Describe a specific node to see its full details, resource capacity, labels, and status
+kubectl describe node <node-name>
+
+# List all pods in the current namespace
+kubectl get pods
+
+# List all pods with extended information like IP address, node name, etc.
+kubectl get pods -o wide
+
+# Describe a specific pod to view its container status, events, and configuration
+kubectl describe pod <pod-name>
+
+# Fetch logs of a specific pod
+kubectl logs <pod-name>
+
+# Fetch logs of a specific container inside a multi-container pod
+kubectl logs <pod-name> -c <container-name>
+
+# Stream (follow) live logs from a pod
+kubectl logs -f <pod-name>
+
+# Access the shell (bash) inside a running pod
+kubectl exec -it <pod-name> -- /bin/bash
+
+# Access the shell (bash) inside a specific container in a multi-container pod
+kubectl exec -it <pod-name> -c <container-name> -- /bin/bash
+
+# Delete a specific pod by its name
+kubectl delete pod <pod-name>
+
+# Create a new pod named 'my-pod' using the nginx image (imperative creation)
+kubectl run my-pod --image=nginx
+
+kubectl api-resources
+kubectl get rc
+kubectl describe rc nginx-rc
+kubectl get pods --selector app=nginx
+kubectl scale rc nginx-rc --replicas=4
+kubectl create rc nginx-rc --image=nginx --replicas=3
+
+kubectl annotate deployments.apps nginx-deployment kubernetes.io/change-cause="Upgraded nginx 1.19 to 1.20"
