@@ -1,0 +1,5 @@
+# Apply a resource configuration (like Pod, Deployment, Service) from a YAML file
+kubectl apply -f pod.yaml
+
+kubectl apply -f nginx-rc.yaml
+

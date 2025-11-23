@@ -1,0 +1,117 @@
+# Check Docker installation details and verify Docker is running
+docker info
+
+# Create a Kind cluster named 'my-first-cluster' using a configuration file
+kind create cluster --name my-first-cluster --config kind-cluster.yaml
+
+# List all Kind clusters available on your system
+kind get clusters
+
+# List all nodes in the current Kubernetes cluster with additional details (IP, roles, version)
+kubectl get nodes -o wide
+
+# Describe a specific node to see its full details, resource capacity, labels, and status
+kubectl describe node <node-name>
+
+# List all pods in the current namespace
+kubectl get pods
+
+# List all pods with extended information like IP address, node name, etc.
+kubectl get pods -o wide
+
+# Describe a specific pod to view its container status, events, and configuration
+kubectl describe pod <pod-name>
+
+# Fetch logs of a specific pod
+kubectl logs <pod-name>
+
+# Fetch logs of a specific container inside a multi-container pod
+kubectl logs <pod-name> -c <container-name>
+
+# Stream (follow) live logs from a pod
+kubectl logs -f <pod-name>
+
+# Access the shell (bash) inside a running pod
+kubectl exec -it <pod-name> -- /bin/bash
+
+# Access the shell (bash) inside a specific container in a multi-container pod
+kubectl exec -it <pod-name> -c <container-name> -- /bin/bash
+
+# Delete a specific pod by its name
+kubectl delete pod <pod-name>
+
+# Create a new pod named 'my-pod' using the nginx image (imperative creation)
+kubectl run my-pod --image=nginx
+
+kubectl api-resources
+kubectl get rc
+kubectl describe rc nginx-rc
+kubectl get pods --selector app=nginx
+kubectl scale rc nginx-rc --replicas=4
+kubectl create rc nginx-rc --image=nginx --replicas=3
+
+kubectl rollout history deployment nginx-deployment
+kubectl set image deployment nginx-deployment nginx-container=nginx:1.20
+kubectl annotate deployments.apps nginx-deployment kubernetes.io/change-cause="Upgraded nginx 1.19 to 1.20"
+kubectl rollout history deployment nginx-deployment
+kubectl describe deployment nginx-deployment
+kubectl set image deployment nginx-deployment nginx-container=nginx:1.21
+kubectl annotate deployments.apps nginx-deployment kubernetes.io/change-cause="Upgraded nginx 1.20 to 1.21"
+kubectl rollout history deployment nginx-deployment
+kubectl rollout undo deployment nginx-deployment --to-revision=1
+
+
+-------------------
+kubectl create deployment backend-deploy \
+  --image=hashicorp/http-echo \
+  --replicas=3 \
+  --port=5678 \
+  --dry-run=client -o yaml > backend-deploy-test.yaml
+
+kubectl apply -f backend-deploy.yaml
+
+kubectl expose deployment backend-deploy \
+  --type=ClusterIP \
+  --port=9090 \
+  --target-port=5678 \
+  --name=backend-svc \
+  --dry-run=client -o yaml >> backend-deploy.yaml
+
+kubectl create deployment frontend-deploy \
+  --image=nginx \
+  --replicas=3 \
+  --port=80 \
+  --dry-run=client -o yaml > frontend-deploy.yaml
+
+kubectl apply -f frontend-deploy.yaml
+
+kubectl expose deployment frontend-deploy \
+  --type=NodePort \
+  --port=80 \
+  --target-port=80 \
+  --name=frontend-svc \
+  --dry-run=client -o yaml >> frontend-deploy.yaml
+
+
+kubectl get all
+kubectl describe svc backend-svc
+kubectl get pods -o wide
+
+
+kubectl run test-pod \
+  --rm -it \
+  --restart=Never \
+  --labels=app=test-pod \
+  --image=nginx \
+  -- /bin/sh
+
+
+inside run :
+curl backend-svc:9090
+
+
+kubectl get pods --show=labels
+kubectl get svc -n kube-system
+kubectl get pods -o wide -n kube-system
+
+kind create cluster --name my-second-cluster --config kind-cluster.yaml
